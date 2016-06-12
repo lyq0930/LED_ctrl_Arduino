@@ -37,11 +37,10 @@ int gamma[] = {
   177,180,182,184,186,189,191,193,196,198,200,203,205,208,210,213,
   215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255 };
 
-#include <IRremote.h>
-#include <IRremoteInt.h>
+#include <IRLib.h>
 int RECV_PIN = 2;
-IRrecv irrecv(RECV_PIN);
-decode_results results;
+IRrecv My_Receiver(RECV_PIN);
+IRdecode My_Decoder;
 
 long previousMillis = 0;        // will store last time LED was updated
 long previousMillis2 = 0;        // will store last time LED was updated
