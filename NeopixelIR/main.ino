@@ -19,22 +19,22 @@ void setup(void){
 void loop(void){
   unsigned long currentMillis = millis();
   strip.Update();
-//  if(currentMillis - previousMillis > 70000){
-//    strip.RainbowCycle(20);
-//    previousMillis = currentMillis;
-//  }
-//  if(currentMillis - previousMillis2 > 50000){
-//    strip.Scanner(strip.Wheel(random(255)), 10);
-//    previousMillis2 = currentMillis;
-//  }
-//  if(currentMillis - previousMillis3 > 40000){
-//    strip.Fade(strip.Color1, strip.Color2, 100, 200);
-//    previousMillis3 = currentMillis;
-//  }
-//  if(currentMillis - previousMillis4 > 30000){
-//    strip.TheaterChase(strip.Wheel(random(255)), strip.Wheel(random(255)), 80);
-//    previousMillis4 = currentMillis;
-//  }
+  if(currentMillis - previousMillis > 70000){
+    strip.RainbowCycle(20);
+    previousMillis = currentMillis;
+  }
+  if(currentMillis - previousMillis2 > 50000){
+    strip.Scanner(strip.Wheel(random(255)), 10);
+    previousMillis2 = currentMillis;
+  }
+  if(currentMillis - previousMillis3 > 40000){
+    strip.Fade(strip.Color1, strip.Color2, 100, 200);
+    previousMillis3 = currentMillis;
+  }
+  if(currentMillis - previousMillis4 > 30000){
+    strip.TheaterChase(strip.Wheel(random(255)), strip.Wheel(random(255)), 80);
+    previousMillis4 = currentMillis;
+  }
 
   if (irrecv.decode(&results)) {
     Serial.print("Received one signal: ");  
