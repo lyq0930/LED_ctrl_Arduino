@@ -21,27 +21,28 @@ void loop(void){
   unsigned long currentMillis = millis();
   strip.Update();
   
-  if(currentMillis - previousMillis > 130000){
+  if(currentMillis - previousMillis > 10000 && strip.ActivePattern == THEATER_CHASE){
     strip.RainbowCycle(20);
     previousMillis = currentMillis;
   }
-  if(currentMillis - previousMillis2 > 90000){
+  if(currentMillis - previousMillis > 10000 && strip.ActivePattern == RAINBOW_CYCLE){
     strip.Scanner(strip.Wheel(random(255)), 10);
-    previousMillis2 = currentMillis;
+    previousMillis = currentMillis;
   }
-  if(currentMillis - previousMillis3 > 70000){
+  if(currentMillis - previousMillis > 10000 && strip.ActivePattern == SCANNER){
     strip.Fade(strip.Color1, strip.Color2, 100, 200);
-    previousMillis3 = currentMillis;
+    previousMillis = currentMillis;
   }
-  if(currentMillis - previousMillis4 > 50000){
-    strip.TheaterChase(strip.Wheel(random(255)), strip.Wheel(random(255)), 80);
-    previousMillis4 = currentMillis;
-  }
-  if(currentMillis - previousMillis5 > 32000){
+  if(currentMillis - previousMillis > 10000 && strip.ActivePattern == FADE){
     DEBUG_PRINTLN("WhiteOverRainbow...");
     strip.whiteOverRainbow();
-    previousMillis5 = currentMillis;
+    previousMillis = currentMillis;
   }
+  if(currentMillis - previousMillis > 10000 && strip.ActivePattern == WhiteOverRainbow){
+    strip.TheaterChase(strip.Wheel(random(255)), strip.Wheel(random(255)), 80);
+    previousMillis = currentMillis;
+  }
+ 
   if(currentMillis - previousMillis6 > 1000){
     DEBUG_PRINT(++timeInSecond);     DEBUG_PRINT("s, "); 
     previousMillis6 = currentMillis;
@@ -88,5 +89,3 @@ void pickAPattern(byte i){
   strip.ActivePattern = pattern(i);
   strip.Update();
 }
-
-void 

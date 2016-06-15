@@ -143,7 +143,7 @@ class NeoPatterns : public Adafruit_NeoPixel
       ActivePattern = WhiteOverRainbow;
     }
     
-    void whiteOverRainbowUpdate(uint8_t whiteSpeed = 70) {
+    void whiteOverRainbowUpdate(uint8_t whiteSpeed = 30) {
       if(whiteLength >= numPixels()) whiteLength = numPixels() - 1;
     
       static unsigned long lastTime = 0;
@@ -180,7 +180,6 @@ class NeoPatterns : public Adafruit_NeoPixel
         TotalSteps = numPixels();
         Color1 = color1;
         Color2 = color2;
-        Index = 0;
         Direction = dir;
    }
 
