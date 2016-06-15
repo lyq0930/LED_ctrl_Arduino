@@ -12,6 +12,7 @@
 #include <Adafruit_NeoPixel.h>
 #define PIN 6
 #define Num_pixels 60
+#define BRIGHTNESS 200
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = pin number (most are valid)
 // Parameter 3 = pixel type flags, add together as needed:
@@ -48,8 +49,10 @@ long previousMillis2 = 0;        // will store last time LED was updated
 long previousMillis3 = 0;        // will store last time LED was updated
 long previousMillis4 = 0;        // will store last time LED was updated
 long previousMillis5 = 0;        // will store last time LED was updated
+long previousMillis6 = 0;
 byte i_p = 0;
 byte flag = 0;
+int timeInSecond = 0;
 
 //void RainbowCycle(uint8_t interval, direction dir = FORWARD)();
 //void TheaterChase(uint32_t color1, uint32_t color2, uint8_t interval, direction dir = FORWARD)();

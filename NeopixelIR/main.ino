@@ -6,6 +6,7 @@ NeoPatterns strip(Num_pixels, PIN, NEO_GRBW + NEO_KHZ800, &stripComplete);
 void setup(void){
   Serial.begin(9600);
   Serial.println("Progam start");
+  strip.setBrightness(BRIGHTNESS);
   strip.begin();
   irrecv.enableIRIn();
   i_p = 1;
@@ -19,21 +20,31 @@ void setup(void){
 void loop(void){
   unsigned long currentMillis = millis();
   strip.Update();
-  if(currentMillis - previousMillis > 70000){
+  
+  if(currentMillis - previousMillis > 130000){
     strip.RainbowCycle(20);
     previousMillis = currentMillis;
   }
-  if(currentMillis - previousMillis2 > 50000){
+  if(currentMillis - previousMillis2 > 90000){
     strip.Scanner(strip.Wheel(random(255)), 10);
     previousMillis2 = currentMillis;
   }
-  if(currentMillis - previousMillis3 > 40000){
+  if(currentMillis - previousMillis3 > 70000){
     strip.Fade(strip.Color1, strip.Color2, 100, 200);
     previousMillis3 = currentMillis;
   }
-  if(currentMillis - previousMillis4 > 30000){
+  if(currentMillis - previousMillis4 > 50000){
     strip.TheaterChase(strip.Wheel(random(255)), strip.Wheel(random(255)), 80);
     previousMillis4 = currentMillis;
+  }
+  if(currentMillis - previousMillis5 > 32000){
+    DEBUG_PRINTLN("WhiteOverRainbow...");
+    strip.whiteOverRainbow();
+    previousMillis5 = currentMillis;
+  }
+  if(currentMillis - previousMillis6 > 1000){
+    DEBUG_PRINT(++timeInSecond);     DEBUG_PRINT("s, "); 
+    previousMillis6 = currentMillis;
   }
 
   if (irrecv.decode(&results)) {
@@ -47,48 +58,16 @@ void loop(void){
       Serial.println("Press Green");
       strip.Scanner(strip.Wheel(random(255)), 10);
     }
-//    if(currentMillis - previousMillis3 > 40000){
-//      strip.Fade(strip.Color1, strip.Color2, 100, 200);
-//    }
-//    if(currentMillis - previousMillis4 > 30000){
-//      strip.TheaterChase(strip.Wheel(random(255)), strip.Wheel(random(255)), 80);
-//    }
+    if(currentMillis - previousMillis3 > 40000){
+      strip.Fade(strip.Color1, strip.Color2, 100, 200);
+    }
+    if(currentMillis - previousMillis4 > 30000){
+      strip.TheaterChase(strip.Wheel(random(255)), strip.Wheel(random(255)), 80);
+    }
     irrecv.resume();
     Serial.print("new value: ");
     Serial.println(results.value, HEX);  
   }
-
-//  if(currentMillis - previousMillis > 1000){
-//    if(flag == 1){
-//      irrecv.resume();
-//      flag = 0;
-//    }
-//  }
-
-
-//  if(currentMillis - previousMillis5 > 16000){
-//    strip.pulseWhite();
-//    previousMillis5 = currentMillis;
-//  }
-    
-//  if (irrecv.decode(&results)) {
-//    Serial.println("Received one signal");  
-//    Serial.println(results.value, HEX);
-//    
-//    if (results.value == 0xFF906F) {
-//      Serial.println("Press RED");
-//      pickAPattern(1);
-//
-//    }
-//
-//    if (results.value == 0xFF10EF) {
-//      Serial.println("Button2");
-//      strip.ActivePattern = COLOR_WIPE;
-//      strip.Interval = 60;
-//      strip.Index = 0;
-//    }
-//    irrecv.resume();  
-//  }
 }
 
 void stripComplete(){
@@ -110,3 +89,4 @@ void pickAPattern(byte i){
   strip.Update();
 }
 
+void 

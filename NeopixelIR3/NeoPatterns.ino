@@ -1,6 +1,6 @@
 // Pattern types supported:
-enum  pattern { NONE, RAINBOW_CYCLE, THEATER_CHASE, COLOR_WIPE, SCANNER, FADE, PulseWhite, WhiteOverRainbow};
-char* patterns[] = {"NONE", "RAINBOW_CYCLE", "THEATER_CHASE", "COLOR_WIPE", "SCANNER", "FADE", "PulseWhite", "WhiteOverRainbow"};
+enum  pattern { NONE, RAINBOW_CYCLE, THEATER_CHASE, COLOR_WIPE, SCANNER, FADE, PulseWhite };
+char* patterns[] = {"NONE", "RAINBOW_CYCLE", "THEATER_CHASE", "COLOR_WIPE", "SCANNER", "FADE", "PulseWhite"};
 // Patern directions supported:
 enum  direction { FORWARD, REVERSE };
  
@@ -19,7 +19,6 @@ class NeoPatterns : public Adafruit_NeoPixel
     uint32_t Color1, Color2;  // What colors are in use
     uint16_t TotalSteps;  // total number of steps in the pattern
     uint16_t Index;  // current step within the pattern
-    uint8_t head, tail, whiteLength;
     
     void (*OnComplete)();  // Callback on completion of pattern
     
@@ -55,9 +54,6 @@ class NeoPatterns : public Adafruit_NeoPixel
                     break;
                 case PulseWhite:
                     pulseWhiteUpdate();
-                    break;
-                case WhiteOverRainbow:
-                    whiteOverRainbowUpdate();
                     break;
                 default:
                     break;
@@ -136,41 +132,7 @@ class NeoPatterns : public Adafruit_NeoPixel
         show();
         Increment();
     }
-    void whiteOverRainbow(uint8_t whiteL = 5){
-      whiteLength = whiteL;
-      head = whiteLength - 1;
-      tail = 0;
-      ActivePattern = WhiteOverRainbow;
-    }
-    
-    void whiteOverRainbowUpdate(uint8_t whiteSpeed = 70) {
-      if(whiteLength >= numPixels()) whiteLength = numPixels() - 1;
-    
-      static unsigned long lastTime = 0;
-      for(int j=0; j<256; j++) {
-        for(uint16_t i=0; i<numPixels(); i++) {
-          if((i >= tail && i <= head) || (tail > head && i >= tail) || (tail > head && i <= head) ){
-            setPixelColor(i, Color(0,0,0, 255 ) );
-          }
-          else{
-            setPixelColor(i, Wheel(((i * 256 / numPixels()) + j) & 255));
-          }
-        }
-  
-        if(millis() - lastTime > whiteSpeed) {
-          head++;
-          tail++;
-          if(head == numPixels()){
-            //loopNum++;
-          }
-          lastTime = millis();
-        }
-      
-        head %=numPixels();
-        tail %=numPixels();
-        show();
-      }
-    }
+ 
     // Initialize for a Theater Chase
     void TheaterChase(uint32_t color1, uint32_t color2, uint8_t interval, direction dir = FORWARD)
     {
@@ -183,7 +145,7 @@ class NeoPatterns : public Adafruit_NeoPixel
         Index = 0;
         Direction = dir;
    }
-
+    
     // Update the Theater Chase Pattern
     void TheaterChaseUpdate()
     {
